@@ -109,8 +109,14 @@ def plot(gs, harmonic_sims, opt, save_file, act_op=False, min_gs=-12, max_gs=12)
 
         # refine scatter data
         refine_idx = np.arange(0, len(df.x), 16)
-        ax.scatter(df.x[refine_idx], y_pred[refine_idx], alpha=0.9, s=50, c=colors[i],
-                   label='prediction' if i == 2 else None)
+        ax.scatter(df.x[refine_idx], y_pred[refine_idx], alpha=0.9, s=50, c=colors[i], label='prediction' if i == 2 else None)
+        
+        # new section added to accomodate plot lines on same graph
+        if (i == 1):
+            refine_idx_ = np.arange(4, len(df.x), 16)
+            ax.scatter(df.x[refine_idx_], y_pred[refine_idx_], alpha=0.9, s=50, c=colors[i], label='prediction' if i == 2 else None)
+            ax.plot(df.x, df.psi, alpha=0.9, c=colors[i], linestyle='solid', label='observed' if i == 2 else None)
+
         ax.plot(df.x, df.psi, alpha=0.9, c=colors[i], linestyle='dashed', label='observed' if i == 2 else None)
         # ax.set_title('$g$ = {:.2f}'.format(df.g[0]))
         ax.fill(np.concatenate([df.x, df.x[::-1]]),
